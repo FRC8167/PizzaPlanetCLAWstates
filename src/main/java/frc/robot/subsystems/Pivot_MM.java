@@ -17,6 +17,9 @@ import frc.robot.RobotContainer;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+
+import javax.swing.text.StyleContext.SmallAttributeSet;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -39,8 +42,9 @@ public class Pivot_MM extends SubsystemBase {
 	
 	private double arbFeedFwd;
 	private double setpt;
+	private AnalogInput potentiometer;
+	private int potAdcCounts;
 	
-
 	// private double maxSetpoint_raw = deg_To_Raw_Sensor_Counts(maxSetpoint_deg);
 	// private double minSetpoint_raw = deg_To_Raw_Sensor_Counts(minSetpoint_deg);
 	
@@ -124,7 +128,17 @@ public class Pivot_MM extends SubsystemBase {
 		_talon.configReverseSoftLimitThreshold(ReverseSoftLimitThreshold, Constants.kTimeoutMs);
 		_talon.configReverseSoftLimitEnable(true, 0);
 		// _talon.configClearPositionOnLimitR(true, 0);
+		potentiometer = new AnalogInput(1);
+		potentiometer.setAverageBits(2);
+		// anglePot = new AnalogPotentiometer(potentiometer,)
 
+		// double counts;
+		// double my_ang_cnts, my_angle;
+		// my_ang_cnts = potentiometer.getValue();
+		// my_angle= my_ang_cnts * Constants.COUNTS_TO_DEGREES;
+		// counts = my_angle / 360 * MOTOR_COUNTS_PER_REV * GEAR_RATIO;
+		// _talon.setSelectedSensorPosition(counts, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+		
 	}
 
 	@Override
@@ -159,6 +173,7 @@ public class Pivot_MM extends SubsystemBase {
 
 		/* Instrumentation */
 		//Instrum.Process(_talon, _sb);
+		potAdcCounts = potentiometer.getValue();
 	}
 
 	double m_targetPos = 0.0;
@@ -177,6 +192,12 @@ public class Pivot_MM extends SubsystemBase {
 		}
 		return adjustedSetpoint;
 	}
+	public double potAngle() {
+		double angle; 
+		angle = (potAdcCounts) * Constants.COUNTS_TO_DEGREES + 0; 
+		return angle;
+	}
+
 	
 	/* Experimental Pivot Jog */
 	public void my_motionMagic_Jog(double deg){
@@ -238,6 +259,10 @@ public class Pivot_MM extends SubsystemBase {
 
 	public void my_resetEncoder() {
 		_talon.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+		// double counts;
+		// counts = deg_To_Raw_Sensor_Counts(potAngle());
+		// _talon.setSelectedSensorPosition(counts, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+
 	}
 
 	public double my_getDeg() {

@@ -123,7 +123,7 @@ public class RobotContainer {
     //HUMAN PLAYER
     extremeController.button(11).onTrue(new AcquireGamePiece(30, 5, m_pivot_MM, m_arm_MM, grabber));
     //LOW LEVEL
-    extremeController.button(8).onTrue(new AcquireGamePiece(60.0, 16.0, m_pivot_MM, m_arm_MM, grabber));
+    extremeController.button(8).onTrue(new AcquireGamePiece(58.5, 16.0, m_pivot_MM, m_arm_MM, grabber));
     //MID LEVEL
     extremeController.button(9).onTrue(new AcquireGamePiece(75.0, 35.0, m_pivot_MM, m_arm_MM, grabber));
     //HIGH LEVEL

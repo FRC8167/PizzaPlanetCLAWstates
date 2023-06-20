@@ -76,7 +76,7 @@ public final class Constants {
   public static final double MANUAL_PIVOT_POWER = 0.3;
   public static final int POT_PORT = 0;
   public static final int OPTICAL_PORT = 0;
-
+  public static final double COUNTS_TO_DEGREES = 0.076089934;
 
 
 
